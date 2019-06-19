@@ -1,29 +1,26 @@
 import { Injectable, isDevMode } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-
 import { Employee } from './employee';
+import * as constants from '../app.constants';
 
 @Injectable({
     providedIn: 'root'
 })
 export class EmployeeService {
-    private employeeUrl = 'api/employees';
-
     constructor(private http: HttpClient) { }
 
     getEmployees(): Observable<Employee[]> {
 
         if (isDevMode()) {
-            return this.http.get<Employee[]>("assets/employees.json")
+            return this.http.get<Employee[]>(constants.EMPLOYEE_DUMMY_DATA_LOCAL)
                 .pipe(
                     tap(data => console.log(JSON.stringify(data))),
                     catchError(this.handleError)
                 );
         } else {
-            return this.http.get<Employee[]>(this.employeeUrl)
+            return this.http.get<Employee[]>(constants.EMPLOYEE_GET_ALL_URL)
                 .pipe(
                     tap(data => console.log(JSON.stringify(data))),
                     catchError(this.handleError)
@@ -34,7 +31,7 @@ export class EmployeeService {
     registerEmployee(employee: Employee): Observable<Employee> {
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         employee.id = null;
-        return this.http.post<Employee>(this.employeeUrl, employee, { headers: headers })
+        return this.http.post<Employee>(constants.EMPLOYEE_POST_URL, employee, { headers: headers })
             .pipe(
                 tap(data => console.log('Register employee: ' + JSON.stringify(data))),
                 catchError(this.handleError)
@@ -55,17 +52,5 @@ export class EmployeeService {
         }
         console.error(err);
         return throwError(errorMessage);
-    }
-
-    private initializeEmployee(): Employee {
-        // Return an initialized object
-        return {
-            id: 0,
-            firstName: null,
-            lastName: null,
-            gender: null,
-            dob: null,
-            department: null
-        };
     }
 }
