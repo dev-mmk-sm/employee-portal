@@ -1,8 +1,8 @@
 import { Injectable, isDevMode } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, of, throwError, Subject } from 'rxjs';
-import { catchError, tap, map } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
 import { Employee } from './employee';
 
@@ -29,18 +29,6 @@ export class EmployeeService {
                     catchError(this.handleError)
                 );
         }
-    }
-
-    getEmployee(id: number): Observable<Employee> {
-        if (id === 0) {
-            return of(this.initializeEmployee());
-        }
-        const url = `${this.employeeUrl}/${id}`;
-        return this.http.get<Employee>(url)
-            .pipe(
-                tap(data => console.log('getEmployee: ' + JSON.stringify(data))),
-                catchError(this.handleError)
-            );
     }
 
     registerEmployee(employee: Employee): Observable<Employee> {

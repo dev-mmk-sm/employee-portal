@@ -11,7 +11,7 @@ import { Employee } from './employee';
 export class RegisterEmployeeComponent implements OnInit {
     employeeForm: FormGroup;
     employee: Employee;
-    emailMessage: string;
+    errorMessage: string;
 
     constructor(private fb: FormBuilder) { }
 
@@ -27,13 +27,26 @@ export class RegisterEmployeeComponent implements OnInit {
         this.employeeForm.get('gender').valueChanges.subscribe(
             value => this.setGender(value)
         );
+
+
+        this.employeeForm.get('dob').valueChanges.subscribe(
+            value => this.setDob(value)
+        );
     }
 
     save() {
-        console.log(this.employeeForm);
-        console.log('Saved: ' + JSON.stringify(this.employeeForm.value));
+        if (this.employeeForm.valid) {
+            //TODO: Route here to Employee list after doing the Save call
+            console.log(this.employeeForm);
+            console.log('Saved: ' + JSON.stringify(this.employeeForm.value));
+        } else {
+            console.log("Validations failed! Cannot proceed further");
+            this.errorMessage = "Validations failed! Cannot proceed further";
+        }
+    }
 
-        //TODO: Route here to Employee list after doing the Save call
+    setDob(dob: string): void {
+        console.log(dob);
     }
 
     setGender(gender: string): void {
