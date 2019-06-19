@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn } from
 import { NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
 
 import { Employee } from './employee';
+import { EmployeeService } from './employee.service';
+import { Router } from '@angular/router';
 
 @Component({
     templateUrl: './register-employee.component.html',
@@ -13,7 +15,7 @@ export class RegisterEmployeeComponent implements OnInit {
     employee: Employee;
     errorMessage: string;
 
-    constructor(private fb: FormBuilder) { }
+    constructor(private fb: FormBuilder, private employeeService: EmployeeService, private router: Router) { }
 
     ngOnInit() {
         this.employeeForm = this.fb.group({
@@ -39,6 +41,13 @@ export class RegisterEmployeeComponent implements OnInit {
             //TODO: Route here to Employee list after doing the Save call
             console.log(this.employeeForm);
             console.log('Saved: ' + JSON.stringify(this.employeeForm.value));
+
+            this.employeeService.getEmployees().subscribe(
+                empoyee => {
+                    this.router.navigate(['/', 'employees']);
+                },
+                error => this.errorMessage = <any>error
+            );
         } else {
             console.log("Validations failed! Cannot proceed further");
             this.errorMessage = "Validations failed! Cannot proceed further";

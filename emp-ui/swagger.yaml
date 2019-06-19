@@ -1,0 +1,93 @@
+---
+swagger: "2.0"
+info:
+  version: "v1"
+  title: "Employee Portal"
+schemes:
+- "http"
+- "https"
+paths:
+  /employee:
+    post:
+      tags:
+      - Employee
+      summary: "Registers an employee information"
+      description: "Registers an employee information"
+      operationId: "saveEmployee"
+      parameters:
+        - in: body
+          name: Employee
+          description: The employee to create.
+          schema:
+            $ref: '#/definitions/Employee'
+      responses:
+        200:
+          description: "Queried successfully"
+          schema:
+            $ref: "#/definitions/Employee"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+        503:
+          description: "Service is unavailable"
+          schema:
+            $ref: "#/definitions/Error"            
+  /employees:
+    get:
+      tags:
+      - Employee
+      summary: "Retrieves all employees"
+      description: "Retrieves all employees"
+      operationId: "getEmployees"
+      responses:
+        200:
+          description: "Queried successfully"
+          schema:
+            $ref: "#/definitions/Employees"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+        503:
+          description: "Service is unavailable"
+          schema:
+            $ref: "#/definitions/Error"
+definitions:
+  Employee:
+    type: "object"
+    required:
+      - firstName
+      - lastName
+      - gender
+      - dob
+      - department
+    properties:
+      id:
+        type: integer
+        format: int64
+      firstName:
+        type: string
+      lastName:
+        type: string
+      gender:
+        type: string
+      dob:
+        type: string
+      department:
+        type: string        
+  Employees:
+    type: array
+    items:
+      $ref: '#/definitions/Employee'
+  Error:
+    type: "object"
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string      
