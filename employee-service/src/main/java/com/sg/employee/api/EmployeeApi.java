@@ -7,6 +7,7 @@ package com.sg.employee.api;
 
 import javax.validation.Valid;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +34,7 @@ public interface EmployeeApi {
         @ApiResponse(code = 503, message = "Service is unavailable", response = Error.class) })
     @RequestMapping(value = "/employee",
         method = RequestMethod.POST)
-    ResponseEntity<Employee> saveEmployee(@ApiParam(value = "The employee to create."  )  @Valid @RequestBody Employee employee);
+    ResponseEntity<HttpStatus> saveEmployee(@ApiParam(value = "The employee to create."  )  @Valid @RequestBody Employee employee);
     
     @ApiOperation(value = "Retrieves all employees", nickname = "getEmployees", notes = "Retrieves all employees", response = Employees.class, tags={ "Employee", })
     @ApiResponses(value = { 

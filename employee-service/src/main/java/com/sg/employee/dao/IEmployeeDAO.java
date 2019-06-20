@@ -4,8 +4,6 @@
 package com.sg.employee.dao;
 
 import com.sg.employee.exception.DAOException;
-
-import com.sg.employee.exception.EmployeeAlreadyExistException;
 import com.sg.employee.model.Employee;
 import com.sg.employee.model.Employees;
 
@@ -15,7 +13,9 @@ import com.sg.employee.model.Employees;
  */
 public interface IEmployeeDAO {
 
-	public void saveEmployee(Employee employee) throws EmployeeAlreadyExistException, DAOException;
+	public void saveEmployee(Employee employee) throws DAOException;
 
 	public Employees getEmployees();
+	
+	boolean deleteEmployee(Employee employee);
 }

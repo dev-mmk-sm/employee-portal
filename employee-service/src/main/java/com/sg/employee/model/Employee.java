@@ -8,35 +8,23 @@ import java.util.Objects;
 
 import javax.validation.constraints.NotNull;
 
-import org.springframework.validation.annotation.Validated;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import io.swagger.annotations.ApiModelProperty;
 
 /**
  * @author Manju Kumar Mohan
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-06-19T05:35:08.152Z")
 
 public class Employee {
-	@JsonProperty("id")
 	private Long id = null;
 
-	@JsonProperty("firstName")
 	private String firstName = null;
 
-	@JsonProperty("lastName")
 	private String lastName = null;
 
-	@JsonProperty("gender")
 	private String gender = null;
 
-	@JsonProperty("dob")
 	private String dob = null;
 
-	@JsonProperty("department")
 	private String department = null;
 
 	public Employee id(Long id) {
@@ -49,7 +37,6 @@ public class Employee {
 	 * 
 	 * @return id
 	 **/
-	@ApiModelProperty(value = "")
 
 	public Long getId() {
 		return id;
@@ -69,8 +56,6 @@ public class Employee {
 	 * 
 	 * @return firstName
 	 **/
-	@ApiModelProperty(required = true, value = "")
-	@NotNull
 
 	public String getFirstName() {
 		return firstName;
@@ -90,9 +75,6 @@ public class Employee {
 	 * 
 	 * @return lastName
 	 **/
-	@ApiModelProperty(required = true, value = "")
-	@NotNull
-
 	public String getLastName() {
 		return lastName;
 	}
@@ -111,9 +93,6 @@ public class Employee {
 	 * 
 	 * @return gender
 	 **/
-	@ApiModelProperty(required = true, value = "")
-	@NotNull
-
 	public String getGender() {
 		return gender;
 	}
@@ -132,9 +111,6 @@ public class Employee {
 	 * 
 	 * @return dob
 	 **/
-	@ApiModelProperty(required = true, value = "")
-	@NotNull
-
 	public String getDob() {
 		return dob;
 	}
@@ -153,9 +129,6 @@ public class Employee {
 	 * 
 	 * @return department
 	 **/
-	@ApiModelProperty(required = true, value = "")
-	@NotNull
-
 	public String getDepartment() {
 		return department;
 	}
@@ -173,9 +146,8 @@ public class Employee {
 			return false;
 		}
 		Employee employee = (Employee) o;
-		return Objects.equals(this.id, employee.id) && Objects.equals(this.firstName, employee.firstName)
-				&& Objects.equals(this.lastName, employee.lastName) && Objects.equals(this.gender, employee.gender)
-				&& Objects.equals(this.dob, employee.dob) && Objects.equals(this.department, employee.department);
+		return Objects.equals(this.firstName, employee.firstName)
+				&& Objects.equals(this.lastName, employee.lastName)  && Objects.equals(this.department, employee.department);
 	}
 
 	@Override

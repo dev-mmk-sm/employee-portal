@@ -4,9 +4,6 @@ buildscript {
 	  	sonarqubeVersion = '2.5'
    }
    repositories {
-      // maven { url "https://hc-eu-west-aws-artifactory.cloud.health.ge.com/artifactory/maven-eis-all" }
-      // maven { url 'https://hc-eu-west-aws-artifactory.cloud.health.ge.com/artifactory/maven-coreload' }
-       
        mavenCentral()
    }
 
@@ -42,8 +39,6 @@ tasks.withType(JavaCompile) {
 } 
 
 repositories {
-   //maven { url "https://hc-eu-west-aws-artifactory.cloud.health.ge.com/artifactory/maven-eis-all" }
-   //maven { url "https://hc-eu-west-aws-artifactory.cloud.health.ge.com/artifactory/maven-coreload" }
    mavenCentral()
 }
 
@@ -60,7 +55,6 @@ jacocoTestReport {
 dependencies {     
 	   compile('org.springframework.boot:spring-boot-starter-web') 
 	   compile(group: 'org.springframework.boot', name: 'spring-boot-starter-jersey')
-	   compile "com.trispark.jdt:jdt:2.70.5295"
 	
 	    testCompile group: 'org.mockito', name: 'mockito-all', version:'1.10.19'
 	
