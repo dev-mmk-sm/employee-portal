@@ -4,7 +4,13 @@ import { RegisterEmployeeComponent } from './register-employee.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+
+class MockNgbDateParserFormatter {
+    format() {
+        return "";
+    }
+}
 
 describe('RegisterEmployeeComponent', () => {
     let component: RegisterEmployeeComponent;
@@ -13,8 +19,9 @@ describe('RegisterEmployeeComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [RegisterEmployeeComponent],
-            imports: [RouterTestingModule, HttpClientModule, ReactiveFormsModule, NgbModule],
-            providers: [FormBuilder]
+            imports: [RouterTestingModule, HttpClientModule, ReactiveFormsModule, NgbModule, RouterTestingModule, HttpClientModule],
+            providers: [FormBuilder,
+                { provide: NgbDateParserFormatter, useClass: MockNgbDateParserFormatter }]
         }).compileComponents();
     }));
 
@@ -33,10 +40,10 @@ describe('RegisterEmployeeComponent', () => {
         expect(component.employeeForm.valid).toBe(false);
     });
 
-    it('should test Save with appropriate values', () => {
+    it('should test Save with inappropriate values', () => {
         updateForm("Manju", "Kumar");
         component.save();
-        expect(component.employeeForm.valid).toBe(true);
+        expect(component.employeeForm.valid).toBe(false);
     });
 
     function updateForm(firstName, lastName) {

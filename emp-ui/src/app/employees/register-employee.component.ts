@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
-import { NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
+import { NgbInputDatepicker, NgbDateStruct, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 
 import { Employee } from './employee';
 import { EmployeeService } from './employee.service';
@@ -15,7 +15,7 @@ export class RegisterEmployeeComponent implements OnInit {
     employee: Employee;
     errorMessage: string;
 
-    constructor(private fb: FormBuilder, private employeeService: EmployeeService, private router: Router) { }
+    constructor(private fb: FormBuilder, private employeeService: EmployeeService, private router: Router, private dateFormatter: NgbDateParserFormatter) { }
 
     ngOnInit() {
         this.employeeForm = this.fb.group({
@@ -42,7 +42,16 @@ export class RegisterEmployeeComponent implements OnInit {
             console.log(this.employeeForm);
             console.log('Saved: ' + JSON.stringify(this.employeeForm.value));
 
-            this.employeeService.getEmployees().subscribe(
+            const date: NgbDateStruct = this.employeeForm.value["dob"];
+
+            this.employee = new Employee();
+            this.employee.firstName = this.employeeForm.value["firstName"];
+            this.employee.lastName = this.employeeForm.value["lastName"];
+            this.employee.dob = this.dateFormatter.format(date);
+            this.employee.gender = this.employeeForm.value["gender"];
+            this.employee.department = this.employeeForm.value["department"];
+
+            this.employeeService.registerEmployee(this.employee).subscribe(
                 empoyee => {
                     this.router.navigate(['/', 'employees']);
                 },
@@ -65,5 +74,4 @@ export class RegisterEmployeeComponent implements OnInit {
 
         }
     }
-
 }

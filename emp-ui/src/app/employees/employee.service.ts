@@ -1,5 +1,5 @@
 import { Injectable, isDevMode } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Employee } from './employee';
@@ -28,10 +28,10 @@ export class EmployeeService {
         }
     }
 
-    registerEmployee(employee: Employee): Observable<Employee> {
+    registerEmployee(employee: Employee): Observable<HttpResponse<any>> {
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         employee.id = null;
-        return this.http.post<Employee>(constants.EMPLOYEE_POST_URL, employee, { headers: headers })
+        return this.http.post<HttpResponse<any>>(constants.EMPLOYEE_POST_URL, employee, { headers: headers })
             .pipe(
                 tap(data => console.log('Register employee: ' + JSON.stringify(data))),
                 catchError(this.handleError)

@@ -53,7 +53,7 @@ describe("EmployeeService", () => {
     describe('registerEmployee()', () => {
         it('Should pass.',
             inject([EmployeeService, HttpTestingController], (employeeService, backend) => {
-                let employee: Employee;
+                let employee = new Employee();
                 employee.firstName = "Krishna";
                 employee.lastName = "Kumar";
                 employee.gender = "Male";
@@ -61,7 +61,7 @@ describe("EmployeeService", () => {
                 employee.department = "CSE";
 
                 service.registerEmployee(employee).subscribe((next) => {
-                    expect(next).toBeTruthy();
+                    expect(next).toBeNull();
                 });
                 backend.expectOne(constants.EMPLOYEE_POST_URL).flush(null, { status: 200, statusText: 'Ok' });
             }));
