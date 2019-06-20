@@ -1,0 +1,93 @@
+buildscript {
+   ext {
+	  	springBootVersion = '1.5.8.RELEASE'
+	  	sonarqubeVersion = '2.5'
+   }
+   repositories {
+       mavenCentral()
+   }
+
+   dependencies {
+      classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+      classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.5")
+      //classpath("org.jfrog.buildinfo:build-info-extractor-gradle:4.9.7")
+   }
+}
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'jacoco'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'org.sonarqube'
+apply plugin: 'maven-publish'
+//apply plugin: 'com.jfrog.artifactory'
+
+springBoot {
+  layout = 'ZIP'
+}
+
+ 
+
+group = 'com.sg.employee'
+version = '1.0-SNAPSHOT'
+bootRepackage.enabled = true
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+tasks.withType(JavaCompile) {
+   options.encoding = 'UTF-8'
+} 
+
+repositories {
+   mavenCentral()
+}
+
+ 
+
+test.finalizedBy jacocoTestReport
+
+jacocoTestReport {
+	reports {
+	   html.enabled = true
+	}
+}
+
+dependencies {     
+	   compile('org.springframework.boot:spring-boot-starter-web') 
+	   compile(group: 'org.springframework.boot', name: 'spring-boot-starter-jersey')
+	
+	    testCompile group: 'org.mockito', name: 'mockito-all', version:'1.10.19'
+	
+	    testCompile group: 'org.powermock', name: 'powermock-module-junit4', version:'1.6.5'
+	
+	    testCompile group: 'org.powermock', name: 'powermock-api-mockito', version:'1.6.5'
+	
+	    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test') {
+             exclude(module: 'hamcrest-core')
+             exclude(module: 'hamcrest-library')
+             exclude(module: 'slf4j-api')
+         }
+
+   
+
+       compile "io.swagger:swagger-core:1.5.6"
+       compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+       compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+       runtime "com.amazonaws:aws-java-sdk-cloudwatch:1.11.117"
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+/*
+artifactory {
+    publish {
+        defaults {
+            publications('mavenJava')
+        }
+    }
+}*/
