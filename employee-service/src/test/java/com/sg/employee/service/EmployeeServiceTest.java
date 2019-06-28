@@ -27,7 +27,6 @@ public class EmployeeServiceTest {
     
     @TestConfiguration
     static class EmployeeServiceImplTestContextConfiguration {
-  
         @Bean
         public IEmployeeService employeeService() {
             return new EmployeeService();
