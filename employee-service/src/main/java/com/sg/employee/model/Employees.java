@@ -16,6 +16,8 @@ import org.springframework.validation.annotation.Validated;
 @javax.annotation.Generated ( value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-06-19T05:35:08.152Z" )
 
 public class Employees extends ArrayList<Employee> {
+	
+	public Employees() {}
 
     public Employees( Collection<Employee> c ) {
         super( c );
